@@ -8,6 +8,7 @@ public class WeaponRod : Weapon    // Inheritance
     [SerializeField] private float swingDuration = 0.2f;
     [SerializeField] private float returnDuration = 0.3f;
 
+    [SerializeField] private WeaponHitBox hitbox;
 
     [SerializeField] private Transform pivot;
     private Quaternion _originalRotation;
@@ -45,7 +46,9 @@ public class WeaponRod : Weapon    // Inheritance
         _originalRotation = pivot.localRotation;
         Quaternion targetRotation = _originalRotation * Quaternion.Euler(swingAngles);
         // out
+        hitbox.AttackBegin();
         yield return RotateOverTime(_originalRotation, targetRotation, swingDuration);
+        hitbox.AttackEnd();
         // back
         yield return RotateOverTime(targetRotation, _originalRotation, returnDuration);
         yield return _isAttacking = false;
