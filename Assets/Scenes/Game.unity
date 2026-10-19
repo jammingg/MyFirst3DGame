@@ -1115,6 +1115,7 @@ GameObject:
   - component: {fileID: 1499698204}
   - component: {fileID: 1499698203}
   - component: {fileID: 1499698202}
+  - component: {fileID: 1499698206}
   - component: {fileID: 1499698201}
   - component: {fileID: 1499698205}
   m_Layer: 0
@@ -1232,6 +1233,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 50
+--- !u!114 &1499698206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499698200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc0eb25e1089ca42ba0d4c3f87e2a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicEnemy
+  player: {fileID: 1170777627}
+  damageRange: 1.1
+  damageAmount: 10
+  damageInterval: 2
 --- !u!1 &2104003368
 GameObject:
   m_ObjectHideFlags: 0
