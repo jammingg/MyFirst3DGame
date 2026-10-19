@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class BasicEnemy : MonoBehaviour
 {
-    [Header("Player")]
-    [SerializeField] private Transform player;
+    
 
     [Header("Enemy")]
     [SerializeField] private float damageRange = 2f;
@@ -13,31 +12,45 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private float stopDistance = 1.3f;
 
 
-
+    private Transform player;
     private Rigidbody _rb;
     private Health _health;
     private Health _playerHP;
     private float _nextDamageTime = 0f;
+    private bool _isDead;
 
     private void Awake()
     {
         _health = GetComponent<Health>();
         _rb = GetComponent<Rigidbody>();
-        _rb.isKinematic = true;
+        _rb.isKinematic = false;
     }
     private void Start()
     {
-        if (player != null)
+        EnemyCounter.enemyCounter.RegisterEnemy();
+        if (player == null)
         {
-            _playerHP = player.GetComponent<Health>();
-            Debug.Log($"Player has {_playerHP}");
+            GameObject playerObject = GameObject.FindWithTag("Player");
+
+           if (playerObject == null)
+           {
+                return;
+           }
+
+            player = playerObject.transform;
         }
+
+        _playerHP = player.GetComponent<Health>();
+
     }
 
     private void Update()
     {
+        if (_isDead) return;
         if(_health != null && _health.CurrentHealth <= 0f)
         {
+            _isDead = true;
+            EnemyCounter.enemyCounter.Enemykilled();
             Destroy(gameObject);
             return;
         }
@@ -65,12 +78,16 @@ public class BasicEnemy : MonoBehaviour
         direction.y = 0f;
         float distance = direction.magnitude;
 
-        if (distance <= stopDistance) return; 
-
+        Vector3 velocity = Vector3.zero;
         direction.Normalize();
-        Vector3 nextPosition = _rb.position + direction * moveSpeed * Time.fixedDeltaTime;
+        if (distance > stopDistance)
+        {
+            velocity = direction * moveSpeed;
+        }
 
-        _rb.MovePosition(nextPosition);
+        
+        _rb.linearVelocity = new Vector3(velocity.x, _rb.linearVelocity.y, velocity.z);
+
         _rb.MoveRotation(Quaternion.LookRotation(direction));
 
     }

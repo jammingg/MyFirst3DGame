@@ -12,17 +12,18 @@ public class Health : MonoBehaviour, IDamagable // Inheritance, Interfaces
     private void Awake()
     {
         CurrentHealth = maxHealth;
+        HealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
     // Encapsulation
     public void TakeDamage(float amount)
     {
         CurrentHealth = Mathf.Max(0f, CurrentHealth - amount);
-        HealthChanged.Invoke(CurrentHealth, MaxHealth);
+        HealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 
     public void Heal(float amount)
     {
         CurrentHealth = Mathf.Max(0f, CurrentHealth + amount);
-        HealthChanged.Invoke(CurrentHealth, MaxHealth);
+        HealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 }
