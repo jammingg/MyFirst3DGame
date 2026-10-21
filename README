@@ -1,0 +1,6 @@
+https://github.com/jammingg/MyFirst3DGame
+
+Start with the scene "Main Menu" 
+Winning conditions: Try to kill all of the enemies
+Losing conditions: Player's health is below 0
+Player control:  Press 'W', 'S', 'A', 'D' to move. 'Space' to jump. Left-click the mouse to attack with your rod.
